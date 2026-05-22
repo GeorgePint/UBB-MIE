@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll infinit</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #content-container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .item {
+            background-color: #ffffff;
+            padding: 30px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 1.2rem;
+            text-align: center;
+            color: #333;
+        }
+
+        #loading {
+            display: none; /* Hidden by default */
+            text-align: center;
+            padding: 15px;
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="content-container">
+    </div>
+    
+    <div id="loading">Loading more content...</div>
+
+    <script>
+        $(document).ready(function() {
+            let itemCount = 0;
+            const itemsPerLoad = 10;
+            let isFetching = false;
+
+            function appendItems() {
+                let htmlString = "";
+                for (let i = 0; i < itemsPerLoad; i++) {
+                    itemCount++;
+                    htmlString += `<div class="item">Item ${itemCount}</div>`;
+                }
+                $('#content-container').append(htmlString);
+            }
+
+            appendItems();
+            appendItems(); 
+
+            // 2. Scroll Event Listener
+            $(window).on('scroll', function() {
+                const scrollPosition = $(window).scrollTop() + $(window).height();
+                const documentHeight = $(document).height();
+
+                if (scrollPosition >= documentHeight - 50 && !isFetching) {
+                    isFetching = true;
+                    
+                    $('#loading').show();
+
+                    setTimeout(function() {
+                        appendItems();
+                        
+                        $('#loading').hide();
+                        isFetching = false;
+                    }, 800); 
+                }
+            });
+        });
+    </script>
+</body>
+</html>
