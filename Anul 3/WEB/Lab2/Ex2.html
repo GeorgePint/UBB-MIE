@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .moving-box {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    
+    /* Absolute positioning for corner movement */
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    /* Smooth transition for position and color */
+    transition: all 2s ease-in-out;
+  }
+
+  /* When the box is hovered, it moves. 
+     Note: If you move too fast, the hover might break. 
+     For a more stable version, you could apply the hover to 'body' 
+  */
+  .moving-box:hover {
+    top: calc(100% - 100px);
+    left: calc(100% - 100px);
+    background-color: red;
+  }
+</style>
+</head>
+<body>
+
+  <div class="moving-box"></div>
+
+</body>
+</html>
